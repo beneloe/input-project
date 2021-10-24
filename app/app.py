@@ -12,6 +12,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+db.create_all()
+
 @app.route('/', methods=["GET", "POST"])
 def index():
   return render_template("mainpage.html")
