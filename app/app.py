@@ -1,10 +1,20 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from helper import pets
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'WrXjh&KsezqN4F!7JjrxKi3#cvtvYXpzW7tPk7HR3JH!WEa83SARa@xq&^Am4hAF$4ahWx&n@L59YV3Riy*jhw&2wiX#2BUTUGe$xbig58b6enZ$ZuvC$%57mcqn9xR'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///myDB.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-@app.route('/')
+db = SQLAlchemy(app)
+
+db.create_all()
+
+@app.route('/', methods=["GET", "POST"])
 def index():
   return render_template("mainpage.html")
 
