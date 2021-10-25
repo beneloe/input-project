@@ -7,7 +7,7 @@ from models import User, Meal, Order, Item
 from flask import render_template, request, url_for, redirect, flash
 
 
-class Meal Form(FlaskForm):
+class MealForm(FlaskForm):
   meal_name = StringField(label = "Meal name:", validators=[DataRequired()])
   cook = StringField(label = "Cook:", validators=[DataRequired()])
   price = StringField(label = "Price:", validators=[DataRequired()])
