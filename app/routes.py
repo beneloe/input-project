@@ -16,7 +16,7 @@ def register():
     user.set_password(form.password.data)
     db.session.add(user)
     db.session.commit()
-  return render_template('register.html', title='Register', form=form)
+  return redirect(url_for('mainpage.html'))
 
 @app.route('/profiles')
 def profiles():
