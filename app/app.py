@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
+from flask_login import current_user, login_user, logout_user, login_required, LoginManager
 from helper import pets
 
 app = Flask(__name__)
@@ -19,7 +20,7 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 @login_manager.user_loader
-def load_user(user.id):
+def load_user(user_id):
   return User.query.get(int(user_id))
 
 @app.route('/', methods=["GET", "POST"])
