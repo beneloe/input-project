@@ -1,24 +1,22 @@
-from flask import Flask
+from flask import Flask, render_template, request, url_for, redirect, flash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
-from app import app, db
+from app import app, db, login_manager
 from models import User, Meal, Order, Item
 from forms import RegistrationForm, LoginForm, MealForm
-from flask import render_template, request, url_for, redirect, flash
+from flask_login import current_user, login_user, logout_user, login_required
+from werkzeug.urls import url_parse
 
-
-class MealForm(FlaskForm):
-  meal_name = StringField(label = "Meal name:", validators=[DataRequired()])
-  cook = StringField(label = "Cook:", validators=[DataRequired()])
-  price = StringField(label = "Price:", validators=[DataRequired()])
-  submit = SubmitField("Add Meal")
-
-def exists(item, order):
-  for i in order:
-    if i.meal_id == item.meal_id:
-       return True
-  return False
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+  form = RegistrationForm()
+  if form.validate_on_submit():
+    user = User(username=form.username.data, email=form.email.data)
+    user.set_password(form.password.data)
+    db.session.add(user)
+    db.session.commit()
+  return render_template('register.html', title='Register', form=form)
 
 @app.route('/profiles')
 def profiles():

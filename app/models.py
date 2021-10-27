@@ -7,7 +7,7 @@ class User(UserMixin, db.Model):
   username = db.Column(db.String(50), index = True, unique = True) 
   email = db.Column(db.String(120), index = True, unique = True) 
   password = db.Column(db.String(120))
-  order_id = db.Column(db.Integer,  db.ForeignKey('order.id'))
+  order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
   
   def __repr__(self):
         return "{}".format(self.username)
