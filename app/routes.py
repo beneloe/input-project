@@ -4,6 +4,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from app import app, db
 from models import User, Meal, Order, Item
+from forms import RegistrationForm, LoginForm, MealForm
 from flask import render_template, request, url_for, redirect, flash
 
 

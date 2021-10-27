@@ -3,18 +3,24 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, EqualTo
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from helper import pets
 
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = 'WrXjh&KsezqN4F!7JjrxKi3#cvtvYXpzW7tPk7HR3JH!WEa83SARa@xq&^Am4hAF$4ahWx&n@L59YV3Riy*jhw&2wiX#2BUTUGe$xbig58b6enZ$ZuvC$%57mcqn9xR'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///myDB.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'WrXjh&KsezqN4F!7JjrxKi3#cvtvYXpzW7tPk7HR3JH!WEa83SARa@xq&^Am4hAF$4ahWx&n@L59YV3Riy*jhw&2wiX#2BUTUGe$xbig58b6enZ$ZuvC$%57mcqn9xR'
 
 db = SQLAlchemy(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
 
-db.create_all()
+@login_manager.user_loader
+def load_user(user.id):
+  return User.query.get(int(user_id))
 
 @app.route('/', methods=["GET", "POST"])
 def index():
