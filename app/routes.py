@@ -15,7 +15,8 @@ from models import User, Meal, Item, Order
 @app.route('/', methods=["GET", "POST"])
 def index():
   meals = Meal.query.all()
-  return render_template("mainpage.html", meals=meals)
+  user = current_user
+  return render_template("mainpage.html", meals=meals, user=user)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
