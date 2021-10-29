@@ -51,36 +51,33 @@ def profiles():
 
 @app.route('/profile/<int:user_id>')
 def profile(user_id):
-   user = User.query.filter_by(id = user_id).first_or_404(description = "No such user found.")
-   meals = Meal.query.all()
-   my_order = Order.query.get(user.order_id)
-   return render_template('profile.html', user = user, meals = meals, my_order = my_order)
+    user = User.query.filter_by(id = user_id).first_or_404(description = "No such user found.")
+    meals = Meal.query.all()
+    my_order = Order.query.get(user.order_id)
+    return render_template('profile.html', user = user, meals = meals, my_order = my_order)
 
-@app.route('/add_item/<int:user_id>/<int:meal_id>/<int:order_id>')
-def add_item(user_id, meal_id, order_id):
-   new_item = Item(meal_id = meal_id, order_id = order_id)
-   user = User.query.filter_by(id = user_id).first_or_404(description = "No such user found.")
-   my_order = Order.query.get(user.order_id)
-   if not exists(new_item, my_order.items):
-      meal = Meal.query.get(meal_id)
-     
-      db.session.add(new_item)
-      db.session.commit()
-   return redirect(url_for('profile', user_id = user_id))
+@app.route('/meal', methods=['GET', 'POST'])
+def meal():
+  form = MealForm()
+  if form.validate_on_submit():
+    meal = Meal(meal_name=form.meal_name.data, cook=form.cook.data, price=form.price.data)
+    db.session.add(meal)
+    db.session.commit()
+    return redirect(url_for('index'))
+  return render_template('meal.html', form = form)
 
 @app.route('/remove_item/<int:user_id>/<int:item_id>')
 def remove_item(user_id, item_id):
   
-   object_to_remove = Item.query.get(item_id)
+  object_to_remove = Item.query.get(item_id)
   
-   db.session.delete(object_to_remove)
+  db.session.delete(object_to_remove)
   
-   db.session.commit()
-   return redirect(url_for('profile', user_id = user_id))
+  db.session.commit()
+  return redirect(url_for('profile', user_id = user_id))
    
 @app.route('/dashboard', methods=["GET", "POST"])
 def dashboard():
-  form = MealForm()
   if request.method == 'POST' and form.validate():
     new_meal = None
    
