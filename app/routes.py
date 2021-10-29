@@ -1,12 +1,33 @@
 from flask import Flask, render_template, request, url_for, redirect, flash
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
-from app import app, db, login_manager
-from models import User, Meal, Order, Item
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, EqualTo
+from app import app, db, LoginManager
 from forms import RegistrationForm, LoginForm, MealForm
-from flask_login import current_user, login_user, logout_user, login_required
+from flask_login import current_user, login_user, logout_user, login_required, LoginManager
 from werkzeug.urls import url_parse
+from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import redirect
+from flask_sqlalchemy import SQLAlchemy
+from flask_bootstrap import Bootstrap
+from models import User, Meal, Item, Order
+
+@app.route('/', methods=["GET", "POST"])
+def index():
+  return render_template("mainpage.html")
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+  form = LoginForm()
+  if form.validate_on_submit():
+    user = User.query.filter_by(email=form.email.data).first()
+
+    if user and form.password.data == user.password:
+      login_user(user)
+      return redirect(url_for('index'))
+    else:
+      return render_template('login.html', form=form)
+  return render_template('login.html', form=form)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -16,7 +37,12 @@ def register():
     user.set_password(form.password.data)
     db.session.add(user)
     db.session.commit()
-  return redirect(url_for('mainpage.html'))
+
+    login_user(user)
+
+    return redirect(url_for('index'))
+
+  return render_template('register.html', form = form)
 
 @app.route('/profiles')
 def profiles():

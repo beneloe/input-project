@@ -16,16 +16,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///myDB.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+import routes
+from models import User
 login_manager = LoginManager(app)
+login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 @login_manager.user_loader
-def load_user(user_id):
-  return User.query.get(int(user_id))
-
-@app.route('/', methods=["GET", "POST"])
-def index():
-  return render_template("mainpage.html")
+def load_user(id):
+  return User.query.get(id)
 
 @app.route('/animals/<pet_type>')
 def animals(pet_type):
@@ -55,4 +54,3 @@ def pet(pet_type, pet_id):
 if __name__ == "__main__":
     app.run()
 
-import routes
