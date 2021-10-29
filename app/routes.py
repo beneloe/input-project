@@ -1,23 +1,54 @@
-from flask import Flask
+from flask import Flask, render_template, request, url_for, redirect, flash
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
-from app import app, db
-from models import User, Meal, Order, Item
-from flask import render_template, request, url_for, redirect, flash
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, EqualTo
+from app import app, db, LoginManager
+from forms import RegistrationForm, LoginForm, MealForm
+from flask_login import current_user, login_user, logout_user, login_required, LoginManager
+from werkzeug.urls import url_parse
+from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import redirect
+from flask_sqlalchemy import SQLAlchemy
+from flask_bootstrap import Bootstrap
+from models import User, Meal, Item, Order
 
+@app.route('/', methods=["GET", "POST"])
+def index():
+  meals = Meal.query.all()
+  user = current_user
+  return render_template("mainpage.html", meals=meals, user=user)
 
-class MealForm(FlaskForm):
-  meal_name = StringField(label = "Meal name:", validators=[DataRequired()])
-  cook = StringField(label = "Cook:", validators=[DataRequired()])
-  price = StringField(label = "Price:", validators=[DataRequired()])
-  submit = SubmitField("Add Meal")
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+  form = LoginForm()
+  if form.validate_on_submit():
+    user = User.query.filter_by(email=form.email.data).first()
 
-def exists(item, order):
-  for i in order:
-    if i.meal_id == item.meal_id:
-       return True
-  return False
+    if user and form.password.data == user.password:
+      login_user(user)
+      return redirect(url_for('index'))
+    else:
+      return render_template('login.html', form=form)
+  return render_template('login.html', form=form)
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+  logout_user()
+  return redirect(url_for('index'))
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+  form = RegistrationForm()
+  if form.validate_on_submit():
+    user = User(username=form.username.data, email=form.email.data, password=form.password.data)
+    db.session.add(user)
+    db.session.commit()
+
+    login_user(user)
+
+    return redirect(url_for('index'))
+
+  return render_template('register.html', form = form)
 
 @app.route('/profiles')
 def profiles():
@@ -26,36 +57,33 @@ def profiles():
 
 @app.route('/profile/<int:user_id>')
 def profile(user_id):
-   user = User.query.filter_by(id = user_id).first_or_404(description = "No such user found.")
-   meals = Meal.query.all()
-   my_order = Order.query.get(user.order_id)
-   return render_template('profile.html', user = user, meals = meals, my_order = my_order)
+    user = User.query.filter_by(id = user_id).first_or_404(description = "No such user found.")
+    meals = Meal.query.all()
+    my_order = Order.query.get(user.order_id)
+    return render_template('profile.html', user = user, meals = meals, my_order = my_order)
 
-@app.route('/add_item/<int:user_id>/<int:meal_id>/<int:order_id>')
-def add_item(user_id, meal_id, order_id):
-   new_item = Item(meal_id = meal_id, order_id = order_id)
-   user = User.query.filter_by(id = user_id).first_or_404(description = "No such user found.")
-   my_order = Order.query.get(user.order_id)
-   if not exists(new_item, my_order.items):
-      meal = Meal.query.get(meal_id)
-     
-      db.session.add(new_item)
-      db.session.commit()
-   return redirect(url_for('profile', user_id = user_id))
+@app.route('/meal', methods=['GET', 'POST'])
+def meal():
+  form = MealForm()
+  if form.validate_on_submit():
+    meal = Meal(meal_name=form.meal_name.data, cook=form.cook.data, price=form.price.data)
+    db.session.add(meal)
+    db.session.commit()
+    return redirect(url_for('index'))
+  return render_template('meal.html', form = form)
 
 @app.route('/remove_item/<int:user_id>/<int:item_id>')
 def remove_item(user_id, item_id):
   
-   object_to_remove = Item.query.get(item_id)
+  object_to_remove = Item.query.get(item_id)
   
-   db.session.delete(object_to_remove)
+  db.session.delete(object_to_remove)
   
-   db.session.commit()
-   return redirect(url_for('profile', user_id = user_id))
+  db.session.commit()
+  return redirect(url_for('profile', user_id = user_id))
    
 @app.route('/dashboard', methods=["GET", "POST"])
 def dashboard():
-  form = MealForm()
   if request.method == 'POST' and form.validate():
     new_meal = None
    
