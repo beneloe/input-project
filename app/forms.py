@@ -7,9 +7,9 @@ class RegistrationForm(FlaskForm):
   username = StringField('Username', validators=[DataRequired()])
 
   def validate_username(self,field):
-    user = User.query.filter_by(username=field.data).first()
-    if user.username == "admin":
-        raise ValidationError("Invalid Username")
+    username = field.data
+    if username == "admin":
+      raise ValidationError("Invalid Username")
 
   email = StringField('Email', validators=[DataRequired()])
   password = PasswordField('Password', validators=[DataRequired()])
