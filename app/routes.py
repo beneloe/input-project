@@ -72,6 +72,11 @@ def meal():
     return redirect(url_for('index'))
   return render_template('meal.html', form = form)
 
+@app.route('/meal/<int:meal_id>', methods=['GET', 'POST'])
+def individual_meal(meal_id):
+  meal = Meal.query.filter_by(id = meal_id).first()
+  return render_template('individual_meal.html', meal = meal)
+
 @app.route('/remove_item/<int:user_id>/<int:item_id>')
 def remove_item(user_id, item_id):
   
