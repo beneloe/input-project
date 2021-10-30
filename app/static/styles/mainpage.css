@@ -1,3 +1,9 @@
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 .avatar {
   width: 40px;
   border-radius: 50%;
@@ -26,14 +32,13 @@
   margin: 0;
   color: white;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-  font-size: 32px;
+  font-size: 50px;
   font-weight: bold;
 }
 
 .banner p {
   font-size: 20px;
   color: white;
-  opacity: .7;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
 }
 
@@ -45,6 +50,7 @@
   height: 100px;
   padding: 0px 50px;
   color: rgba(0,0,0,0.3);
+  margin-top: auto;
 }
 .footer-links {
   display: flex;
@@ -62,4 +68,56 @@
 }
 .footer .fa-heart {
   color: #D23333;
+}
+
+.card-product {
+  overflow: hidden;
+  height: 120px;
+  background: white;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.card-product img {
+  height: 100%;
+  width: 120px;
+  object-fit: cover;
+}
+
+.card-product h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.card-product p {
+  font-size: 12px;
+  line-height: 1.4;
+  opacity: .7;
+  margin-bottom: 0;
+  margin-top: 8px;
+}
+
+.card-product .card-product-infos {
+  padding: 16px;
+}
+
+.all-meals {
+  color: black;
+}
+
+.all-meals a {
+  color: black;
+  text-decoration: none;
+}
+
+.all-meals a:hover {
+  color: black;
+}
+
+.meal-description {
+  width: 50%;
 }

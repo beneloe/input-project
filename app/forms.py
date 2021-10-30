@@ -12,6 +12,12 @@ class RegistrationForm(FlaskForm):
       raise ValidationError("Invalid Username")
 
   email = StringField('Email', validators=[DataRequired()])
+
+  def validate_email(self,field):
+    email = field.data
+    if User.query.filter_by(email=email).count() > 0:
+      raise ValidationError("Email already taken")
+
   password = PasswordField('Password', validators=[DataRequired()])
   password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
   submit = SubmitField('Register')
@@ -24,6 +30,7 @@ class LoginForm(FlaskForm):
 
 class MealForm(FlaskForm):
   meal_name = StringField(label = "Meal name", validators=[DataRequired()])
+  meal_image = StringField(label = "Meal image url", validators=[DataRequired()])
   cook = StringField(label = "Cook", validators=[DataRequired()])
   price = StringField(label = "Price", validators=[DataRequired()])
   submit = SubmitField("Add meal")

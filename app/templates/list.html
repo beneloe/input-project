@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="ml-3 mr-3 mb-5 pb-3 pt-3 pr-3 pl-3">
+  <h2 class="mb-4 mt-4">All of our delicious meals</h2>
+    {% for meal in meals %}
+      <a href="{{ meal.id }}">
+        <div class="card-product">
+          <img src="{{ meal.meal_image }}" />
+          <div class="card-product-infos">
+            <h2>{{ meal.meal_name }} -  EUR {{ meal.price }}</h2>
+            <p>Delicious box cooked by master chef <strong>{{ meal.cook }}</strong></p>
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+</div>
+{% endblock %}
