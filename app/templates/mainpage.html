@@ -69,7 +69,7 @@
     <h2>Our Top 5 Boxes</h2>
     <ul>
       {% for meal in meals[:5] %}
-        <li>{{ meal.meal_name }}</li>
+        <li><a href="meal/{{ meal.id }}">{{ meal.meal_name }}</a></li>
       {% endfor %}
     </ul>
   </div>
