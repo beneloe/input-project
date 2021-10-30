@@ -7,7 +7,6 @@ from werkzeug.utils import redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_login import current_user, login_user, logout_user, login_required, LoginManager
-from helper import pets
 
 app = Flask(__name__)
 
@@ -25,17 +24,6 @@ login_manager.login_view = 'login'
 @login_manager.user_loader
 def load_user(id):
   return User.query.get(id)
-
-@app.route('/animals/<pet_type>')
-def animals(pet_type):
-  html = f'''
-  <h1>List of {pet_type}</h1>
-  <ul>
-  '''
-  for idx, animal in enumerate(pets[pet_type]):
-    html += f'''<li><a href='/animals/{pet_type}/{idx}'>{animal['name']}</a></li>'''
-  html += '</ul>'
-  return html
 
 if __name__ == "__main__":
     app.run()

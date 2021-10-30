@@ -27,6 +27,7 @@ def login():
 
     if user and form.password.data == user.password:
       login_user(user)
+
       return redirect(url_for('index'))
     else:
       return render_template('login.html', form=form, user=user)

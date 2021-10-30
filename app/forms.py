@@ -12,6 +12,12 @@ class RegistrationForm(FlaskForm):
       raise ValidationError("Invalid Username")
 
   email = StringField('Email', validators=[DataRequired()])
+
+  def validate_email(self,field):
+    email = field.data
+    if User.query.filter_by(email=email).count() > 0:
+      raise ValidationError("Email already taken")
+
   password = PasswordField('Password', validators=[DataRequired()])
   password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
   submit = SubmitField('Register')

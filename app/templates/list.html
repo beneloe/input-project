@@ -2,7 +2,7 @@
 {% block body %}
 <h2 class="mb-4 mt-4">All of our delicious meals</h2>
   {% for meal in meals %}
-    <a href="meal/{{ meal.id }}">
+    <a href="{{ meal.id }}">
       <div class="card-product">
         <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" />
         <div class="card-product-infos">
