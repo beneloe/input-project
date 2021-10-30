@@ -66,9 +66,9 @@
   </div>
 
   <div class="ml-3 mt-3 pr-3 pl-3">
-    <h2>Our Top 3 Boxes</h2>
+    <h2>Our Top 5 Boxes</h2>
     <ul>
-      {% for meal in meals %}
+      {% for meal in meals[:5] %}
         <li>{{ meal.meal_name }}</li>
       {% endfor %}
     </ul>
