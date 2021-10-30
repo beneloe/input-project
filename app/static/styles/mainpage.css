@@ -1,3 +1,9 @@
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 .avatar {
   width: 40px;
   border-radius: 50%;
@@ -45,7 +51,7 @@
   height: 100px;
   padding: 0px 50px;
   color: rgba(0,0,0,0.3);
-  margin-top: 50px;
+  margin-top: auto;
 }
 .footer-links {
   display: flex;
