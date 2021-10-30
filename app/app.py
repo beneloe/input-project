@@ -26,5 +26,5 @@ def load_user(id):
   return User.query.get(id)
 
 if __name__ == "__main__":
-    app.run()
+  app.run()
 

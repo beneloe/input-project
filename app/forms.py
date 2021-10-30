@@ -34,9 +34,3 @@ class MealForm(FlaskForm):
   cook = StringField(label = "Cook", validators=[DataRequired()])
   price = StringField(label = "Price", validators=[DataRequired()])
   submit = SubmitField("Add meal")
-
-def exists(item, order):
-  for i in order:
-    if i.meal_id == item.meal_id:
-       return True
-  return False
