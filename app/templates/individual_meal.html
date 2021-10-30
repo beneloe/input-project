@@ -1,3 +1,5 @@
+{% extends "layout.html" %}
+{% block body %}
 <h1>{{ meal.meal_name }}</h1>
 <img src="">
 <p>{{ meal.cook }}</p>
@@ -5,3 +7,4 @@
   <li>{{ meal.price }}</li>
   <li>{{ meal }}</li>
 </ul>
+{% endblock %}

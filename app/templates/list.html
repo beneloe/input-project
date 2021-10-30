@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2 class="mb-4 mt-4">All of our delicious meals</h2>
+  {% for meal in meals %}
+    <a href="meal/{{ meal.id }}">
+      <div class="card-product">
+        <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" />
+        <div class="card-product-infos">
+          <h2>{{ meal.meal_name }} -  EUR {{ meal.price }}</h2>
+          <p>Delicious box cooked by master chef <strong>{{ meal.cook }}</strong></p>
+        </div>
+      </div>
+    </a>
+  {% endfor %}
+{% endblock %}
