@@ -1,22 +1,28 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="formwrapper">
-  <h2 class="title">Add a new meal:</h2>
-  <form action="" method="post" novalidate>
-  {{ form.hidden_tag() }}
-    <p>
-      {{ form.meal_name.label }}<br>
-      {{ form.meal_name(size=50) }}<br>
-    </p>
-    <p>
-      {{ form.cook.label }}<br>
-      {{ form.cook(size=50) }}<br>
-    </p>
-    <p>
-      {{ form.price.label }}<br>
-      {{ form.price(size=50) }}<br>
-    </p>
-    <p>{{ form.submit() }}</p>
-  </form>
+<div class="ml-3 mr-3 mt-3 pr-3 pl-3">
+  <div class="formwrapper">
+    <h2 class="title">Add a new meal:</h2>
+    <form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+      <p>
+        {{ form.meal_name.label }}<br>
+        {{ form.meal_name(size=50) }}<br>
+      </p>
+      <p>
+        {{ form.cook.label }}<br>
+        {{ form.cook(size=50) }}<br>
+      </p>
+      <p>
+        {{ form.price.label }}<br>
+        {{ form.price(size=50) }}<br>
+      </p>
+      <p>
+        {{ form.meal_image.label }}<br>
+        {{ form.meal_image(size=50) }}<br>
+      </p>
+      <p>{{ form.submit() }}</p>
+    </form>
+  </div>
 </div>
 {% endblock %}

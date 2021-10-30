@@ -70,7 +70,7 @@ def meal():
   user = current_user
   form = MealForm()
   if form.validate_on_submit():
-    meal = Meal(meal_name=form.meal_name.data, cook=form.cook.data, price=form.price.data)
+    meal = Meal(meal_name=form.meal_name.data, meal_image=form.meal_image.data, cook=form.cook.data, price=form.price.data)
     db.session.add(meal)
     db.session.commit()
     return redirect(url_for('index'))

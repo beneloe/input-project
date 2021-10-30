@@ -30,6 +30,7 @@ class LoginForm(FlaskForm):
 
 class MealForm(FlaskForm):
   meal_name = StringField(label = "Meal name", validators=[DataRequired()])
+  meal_image = StringField(label = "Meal image url", validators=[DataRequired()])
   cook = StringField(label = "Cook", validators=[DataRequired()])
   price = StringField(label = "Price", validators=[DataRequired()])
   submit = SubmitField("Add meal")

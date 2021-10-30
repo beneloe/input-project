@@ -1,33 +1,35 @@
 {% extends "layout.html" %}
 {% block body %}
-<h1>Register Here</h1>
-<br>
-<form action="" method="post">
-    {{ form.hidden_tag() }}
-    <p>
-        {{ form.username(size=32,placeholder="username") }}<br>
-        {% for error in form.username.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.email(size=32,placeholder="email@gmail.com") }}<br>
-        {% for error in form.email.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.password(size=32,placeholder="password*$%!@") }}<br>
-        {% for error in form.password.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.password2(size=32,placeholder="password*$%!@") }}<br>
-        {% for error in form.password2.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>{{ form.submit() }}</p>
-</form>
+<div class="ml-3 mr-3 mt-3 pr-3 pl-3">
+  <h1>Register Here</h1>
+  <br>
+  <form action="" method="post">
+      {{ form.hidden_tag() }}
+      <p>
+          {{ form.username(size=32,placeholder="username") }}<br>
+          {% for error in form.username.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.email(size=32,placeholder="email@gmail.com") }}<br>
+          {% for error in form.email.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.password(size=32,placeholder="password*$%!@") }}<br>
+          {% for error in form.password.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.password2(size=32,placeholder="password*$%!@") }}<br>
+          {% for error in form.password2.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>{{ form.submit() }}</p>
+  </form>
+</div>
 {% endblock %}

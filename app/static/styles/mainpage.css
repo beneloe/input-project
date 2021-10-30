@@ -100,3 +100,19 @@
   padding: 16px;
 }
 
+.all-meals {
+  color: black;
+}
+
+.all-meals a {
+  color: black;
+  text-decoration: none;
+}
+
+.all-meals a:hover {
+  color: black;
+}
+
+.meal-description {
+  width: 50%;
+}

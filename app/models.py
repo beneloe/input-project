@@ -16,6 +16,7 @@ class Meal(db.Model):
   id = db.Column(db.Integer, primary_key = True)
   cook = db.Column(db.String(80), index = True, unique = False)
   meal_name = db.Column(db.String(80), index = True, unique = False)
+  meal_image = db.Column(db.String(1000), index = True, unique = False)
   price = db.Column(db.String(80), index = True, unique = False)
   def __repr__(self):
     return f"{self.meal_name} ({self.price}) by chef {self.cook}"
