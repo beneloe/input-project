@@ -7,7 +7,6 @@ class User(UserMixin, db.Model):
   username = db.Column(db.String(50), index = True, unique = False) 
   email = db.Column(db.String(120), index = True, unique = True) 
   password = db.Column(db.String(120))
-  order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
   
   def __repr__(self):
     return "{}".format(self.username)
@@ -20,14 +19,3 @@ class Meal(db.Model):
   price = db.Column(db.String(80), index = True, unique = False)
   def __repr__(self):
     return f"{self.meal_name} ({self.price}) by chef {self.cook}"
-
-class Item(db.Model):
-  id = db.Column(db.Integer, primary_key = True)
-  meal_id = db.Column(db.Integer, db.ForeignKey('meal.id'))
-  order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
-  def __repr__(self):
-    return f"{Meal.query.get(self.meal_id).meal_name} ({Meal.query.get(self.meal_id).price}) by chef {Meal.query.get(self.meal_id).cook}"
-
-class Order(db.Model):
-  id = db.Column(db.Integer, primary_key = True)
-  items = db.relationship('Item', backref = 'orders', lazy = 'dynamic')

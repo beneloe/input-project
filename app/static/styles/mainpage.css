@@ -19,7 +19,7 @@ body{
 }
 
 .navbar-lewagon .navbar-brand img {
-  width: 40px;
+  width: 80px;
 }
 
 .banner {
@@ -40,6 +40,19 @@ body{
   font-size: 20px;
   color: white;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+.btn-flat {
+  color: white;
+  padding: 8px 24px;
+  border-radius: 4px;
+  background: #1EDD88;
+  transition: background 0.3s ease;
+}
+
+.btn-flat:hover {
+  background: #1BCB7F;
+  color: white;
 }
 
 .footer {
